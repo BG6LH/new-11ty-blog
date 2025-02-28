@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>用巧克力洞洞板做LM386音频放大器</title>
+		<meta name="description" content="我以前认为无聊的所有东西现在都是一种‘可爱’的打发时间的方式。">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="BG6LH&#39;s Blog">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/eleventy-base-blog/" class="home-link">BG6LH&#39;s Blog</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1 id="lm386">用巧克力洞洞板做LM386音频放大器</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-02-28">28 February 2025</time></li>
+	<li><a href="/eleventy-base-blog/tags/clippings/" class="post-tag">clippings</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/wechat/" class="post-tag">WeChat</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/bd6cr/" class="post-tag">BD6CR</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/post/" class="post-tag">post</a></li>
+</ul>
+
+<p>作者分享了一个使用LM386音频放大电路制作的小实验，并使用了BD6CR设计的巧克力洞洞板。他使用了KiCad设计原理图，并详细描述了制作过程。该板的设计非常巧妙，每个焊盘的功能都经过精心考虑。作者还提到了BD6CR发布的免费PCB文件和电子书，其中包含许多有趣的项目。</p>
+<ul>
+<li>作者使用了LM386音频放大电路</li>
+<li>使用了BD6CR设计的巧克力洞洞板</li>
+<li>制作了一个便携音箱</li>
+<li>使用了KiCad设计原理图</li>
+<li>BD6CR发布了免费的PCB文件和电子书</li>
+</ul>
+<hr>
+<p>看过汽车节目《Top Gear》的人都知道大嘴杰瑞米·克拉克森(Jeremy Clarkson)吧？他今年都62了，我的老天鹅。他算是赶上了燃油车的巅峰时代。如今已经满世界都是电动车了，所以他可能觉得自己out了。前几天他在生日之际谈起了对变老和死亡看法。最后一句话令人印象深刻：“我认为这就是老年的定义。<strong>我以前认为无聊的所有东西现在都是一种‘可爱’的打发时间的方式。</strong>”</p>
+<p>可能我也老了。最近做了一个自以为很可爱的实验，一个LM386的音频放大电路。这是2块9毛8包邮就能搞定的事情。但是我却安装了KiCad 6，自己画了原理图，在BD6CR设计的巧克力洞洞板上完成了制作。其间BI1EIH对我的电路设计给予了不少指导。其实也没啥可设计，因为任何LM386芯片的Datasheet 最后都有那个放大电路。有意思的是接不同的零件能产生不同的放大效果。不同的应用，侧重点不太一样。考虑到我打算给QCX-mini做个外放的便携音箱，所以我加了一个9V的电池供电、一个LED指示灯，以及几个高低频的滤波电容。</p>
+<p><img src="content/blog/lm386_audio_amplifier_with_bd6cr_chocolate_pcb.webp" alt="图片"></p>
+<p>LM386的1、8脚之间的C5是可选的，可以把电路的放大增益从20dB提升到200dB。实验结果证明，20dB已经很响了，加了C5之后有点辣耳朵了。</p>
+<p>其实我真的不是一个那么闲的人。我只是希望在日子过的越来越复杂时，让自己能安静下来几分钟，体会一下自麦克斯韦以降，人类智慧的那点结晶。</p>
+<p>BD6CR设计的巧克力洞洞板很好玩。它的焊盘不像普通洞洞板那样简单排列，而是在一小块4x3cm见方的板子上分布了大约13x10个焊盘，外围一圈是接地，里边又分成几组，有的串联，有的独立，每组还有就近接地。仔细观察它，你能体会到很多来自作者的巧思。这就是为电子爱好者精心设计的小玩具。</p>
+<p><img src="content/blog/lm386_audio_amplifier_with_bd6cr_chocolate_pcb-1.webp" alt="图片"></p>
+<p>为了布置元件方便，我用KiCad画了一片巧克力板，就为了能事先把原件摆一摆，提高一下制作效率。个人很享受这个过程，仿佛在玩无线电老中医的乐高积木。</p>
+<p><img src="content/blog/lm386_audio_amplifier_with_bd6cr_chocolate_pcb-2.webp" alt="图片"></p>
+<p><img src="content/blog/lm386_audio_amplifier_with_bd6cr_chocolate_pcb-3.webp" alt="图片"></p>
+<p>下边是完成后的作业。</p>
+<p><img src="content/blog/_media/d45d9592bd47be3552a991070e4a9a6d_MD5.webp" alt="图片"></p>
+<p>看看背面，没咋飞线就搞定了。</p>
+<p><img src="content/blog/_media/94b1c76f2cc5aaaf33e8777daf7c022d_MD5.webp" alt="图片"></p>
+<p>再来段视频，证明我弄响了。</p>
+<p>关注</p>
+<p><strong>哪儿能买到巧克力洞洞板？</strong></p>
+<p>**这玩意儿目前没得卖！**但是BD6CR分享了他的巧克力洞洞板设计。大家可以下载了自己去JLC打印。一张PCB上有六块上边说的小板，中间用邮票孔分开，可以根据需要掰下一块就用。<strong>它的尺寸特意控制在10x10cm之内，你懂的。</strong></p>
+<p>BD6CR还写了一本《巧克力洞洞板制作》的电子书，里边有好多他用巧克力板做的小玩具，包括SSB接收机、皮鞋这些经典设备。</p>
+<p>免费PCB文件、电子书，可以读BD6CR的文章：<a href="http://mp.weixin.qq.com/s?__biz=MzU1MDk5Mzg4Mg==&amp;mid=2247485305&amp;idx=1&amp;sn=9735498aa9ef2a2e2302eaa405810007&amp;chksm=fb996dcccceee4da959902b53d0836de17b90a8895edafcd62bd99953281cc0d68f4b72ad233&amp;scene=21#wechat_redirect">免费巧克力洞洞板</a></p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/cqww_vhf_contest_2021/">“充气娃娃”甚高频通联竞赛</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with <a href="https://www.11ty.dev/">Eleventy v3.0.0</a></em></p>
+		</footer>
+
+		<!-- This page `/lm386_audio_amplifier_with_bd6cr_chocolate_pcb/` was built on 2025-02-28T09:19:33.748Z -->
+		<script type="module" src="/eleventy-base-blog/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

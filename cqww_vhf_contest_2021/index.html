@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>“充气娃娃”甚高频通联竞赛</title>
+		<meta name="description" content="美国业余无线电《CQ》杂志经常举办各种全球范围（World Wide）的通联竞赛，通常冠以“CQWW”开头。于是国内业余届常将其称为“充气娃娃”比赛。本周末即将举行一场“CQWW VHF Contest”。">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="BG6LH&#39;s Blog">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/eleventy-base-blog/" class="home-link">BG6LH&#39;s Blog</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1 id="">“充气娃娃”甚高频通联竞赛</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-02-28">28 February 2025</time></li>
+	<li><a href="/eleventy-base-blog/tags/clippings/" class="post-tag">clippings</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/post/" class="post-tag">post</a></li>
+</ul>
+
+<p>该页面介绍了2021年度CQWW VHF Contest的比赛信息。比赛时间从北京时间7月18日凌晨2点到7月19日凌晨5点，持续27小时。参赛者需在VHF频段（50/144MHz）通联电台并记录对方呼号和网格，最终根据通联数量、不同网格数量来计算积分。比赛不限制通信模式，可以使用FM、CW、SSB、RTTY和弱信号数字模式等。VHF频段在我国业余无线电中是入门频段，工作特点是依赖小型天线、视距传播，且在夏季有多种超视距传播现象。参赛者需要持有《业余无线电A类操作证书》，并可以在有执照电台的监督下参赛。比赛规则可以在官方网站上查看。</p>
+<ul>
+<li>比赛时间：北京时间7月18日凌晨2点至7月19日凌晨5点，共27小时</li>
+<li>参赛频段：50/144MHz VHF频段</li>
+<li>比赛形式：通联电台，记录对方呼号和网格</li>
+<li>计分规则：同一网格通联不同电台计1分，移动到新网格再次通联可计分；总积分 = 总点数 x 网格总数</li>
+<li>参赛资格：持有《业余无线电A类操作证书》</li>
+<li>VHF频段特点：依赖小型天线、视距传播，夏季有多种超视距传播现象</li>
+<li>比赛不限制通信模式</li>
+<li>参赛者可以在有执照电台监督下使用该电台呼号参赛</li>
+<li>我国规定业余台在这两个频点上发射，辐射到自由空间的等效功率不得超过25W</li>
+<li>可以使用“火腿网格”微信小程序确定网格坐标</li>
+</ul>
+<hr>
+<p>业余无线电《CQ》杂志经常举办各种全球范围（World Wide）的通联竞赛，通常冠以“CQWW”开头。于是国内业余届常将其戏称为“充气娃娃”比赛。</p>
+<p>本周末即将举行一场2021年度 CQWW VHF Contest。时间段是北京时间7月18日星期日凌晨2点，至7月19日星期一的早晨5点，共27小时。比赛内容是看谁在VHF频段(50/144MHz频段)，通联的<strong>电台多</strong>、通联的<a href="http://mp.weixin.qq.com/s?__biz=MzI0NTgxNDI0NQ==&amp;mid=2247483672&amp;idx=1&amp;sn=54b09c008bee364b6dd6a68e2b6235dc&amp;chksm=e9498792de3e0e84d8d769a87613278f12c10f1e476c4182e5e0c8ef03081127d0f714f5be43&amp;scene=21#wechat_redirect"><strong>梅登海德网格</strong></a><strong>多</strong>。</p>
+<p>比赛方式很简单：</p>
+<ul>
+<li>每个通联(QSO)只需要报告自己的呼号、所在的网格(前4位，比如我在ON80)；</li>
+<li>同时抄下对方的“呼号+网格”；</li>
+<li>比赛结束后，提交日志给组委会；</li>
+<li>算总分，算排名，发奖状。</li>
+</ul>
+<p>![[“充气娃娃”甚高频通联竞赛.webp]]</p>
+<p>上图：IK6QON在2016年的CQ WWVHF竞赛奖状，参赛者以440分获得了单人小功率组第一名。图片来源：互联网搜索引擎，侵删。</p>
+<p>它的计分规则也很关注网格：</p>
+<ul>
+<li>在同一个网格里，每通一个不同的电台(呼号)，算一次有效QSO记录，计算一个点数；</li>
+<li>如果你移动到了新网格，再次通联了之前通过的台，还可以再计一次点数；</li>
+<li>最后，有效QSO里覆盖的不同网格数量，会用来乘以所有的点数，计总积分。</li>
+</ul>
+<p>QSO点数、总积分计算方式：</p>
+<ul>
+<li>一次50MHz的有效记录计1个点；一次144MHz的有效记录计2个点；</li>
+<li>总积分 = 总点数 x 网格总数。</li>
+</ul>
+<p>是不是很刺激？听起来跟“四川麻将”里的加磅一样！</p>
+<p>不过一个4位字母加数字的网格，在北京这边，跨度已经将近100多公里了。难度还是有点的。拔特：北京北五环以外是ON80，北五环以内就是OM89了；鹫峰国家公园西边几公里，正好是ON70、ON80、OM79、OM78四个网格交界的地方，跑去喊一圈，总点数就可以x4了！</p>
+<p>另外，这个比赛不限制通信模式，也就是说，无论是FM的话音、还是CW、SSB、RTTY，乃至弱信号数字模式，例如FT8、FT4，都可以参赛，简直跟割韭菜一样。</p>
+<p><strong>关于VHF</strong></p>
+<p>VHF，甚高频，是指频率在30MHz～300MHz之内的频段。在我国VHF几乎是业余无线电的入门频段。我国分配给业余无线电的VHF频段有两个，分别是：50～54MHz、144-148MHz。在该范围内，业余无线电作为主要业务，与其它业务共享该频段。其中144～146MHz还是唯一的主要业务。</p>
+<p>这个两个频段的工作特点是：</p>
+<ul>
+<li>依赖的天线尺寸不是特别大，50MHz上最简单的偶极谐振的天线大约才3米长，144MHz只有大约1米；所以特别适合车载移动通信、或者自制高指向性的天线。</li>
+<li>VHF频段通信，常见的是在“视距”范围内的传播。但是在夏天，非常容易发生电离层E层的突发传播、对流层散射、大气高空逆温导致的波导传播，以及流星尾迹、月面反射等超视距传播现象，甚至飞机都能反射VHF电波。有惊喜～！</li>
+</ul>
+<p><strong>关于参赛资格</strong></p>
+<p>参加VHF通联比赛几乎没有任何门槛，持有《业余无线电A类操作证书》者即可参加该比赛。这是入门的最初级频段，国内有17万人具备这个资格。</p>
+<p>这句话也可以这样理解：</p>
+<ul>
+<li>我已有A类操作证书、但还没有买对讲机，也没有电台执照和呼号，可以参加这个比赛吗？</li>
+<li>可以的。找一个有呼号、有执照的电台。取得设置人同意，并在他的监督下，使用该电台呼号参加比赛。</li>
+</ul>
+<p>这么做合规吗？当然合规。参见《业余无线电台管理办法(2013)》第二十六、三十四条，以及附件《业余无线电台呼号说明》第7条。</p>
+<p>值得注意的是，我国规定业余台在这两个频点上发射，辐射到自由空间的等效功率不得超过25W。</p>
+<p><strong>关于梅登海德网格</strong></p>
+<p>参加 CQ WW VHF 比赛，网格信息很重要，如何确定自己的网格坐标？这个微信小程序应该用的上：“火腿网格”。</p>
+<p><strong>CQWW VHF比赛的详细规则</strong></p>
+<p>这里不再赘述了，文末的原文链接是竞赛规则的网站。可以在浏览器里打开查看具体规则，参赛组别，功率组别，日志提交方式，以及奖状获得方式：</p>
+<p>https://cqww-vhf.com/rules.htm</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/blog/fourthpost/">This is my fourth post</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/lm386_audio_amplifier_with_bd6cr_chocolate_pcb/">用巧克力洞洞板做LM386音频放大器</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with <a href="https://www.11ty.dev/">Eleventy v3.0.0</a></em></p>
+		</footer>
+
+		<!-- This page `/cqww_vhf_contest_2021/` was built on 2025-02-28T09:19:33.748Z -->
+		<script type="module" src="/eleventy-base-blog/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>
