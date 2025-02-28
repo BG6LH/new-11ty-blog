@@ -5,7 +5,7 @@ export default {
 	description: "I am writing about my experiences as a naval navel-gazer.",
 	author: {
 		name: "BG6LH",
-		email: "youremailaddress@example.com",
+		email: "bg6lh(at)qsl.net",
 		url: "https://bg6lh.netlify.app/about/"
 	}
 }
