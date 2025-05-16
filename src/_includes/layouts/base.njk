@@ -6,6 +6,8 @@
 		<title>{{ title or metadata.title }}</title>
 		<meta name="description" content="{{ description or metadata.description }}">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+		<link rel="stylesheet" href="/style.out.css"/>
+		<script src="https://unpkg.com/@appnest/masonry-layout/umd/masonry-layout.min.js"></script>
 
 		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
 		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
@@ -24,7 +26,7 @@
 		{#- Add an arbitrary string to the bundle #}
 		{%- css %}/* This is an arbitrary CSS string added to the bundle */{% endcss %}
 		{#- Add the contents of a file to the bundle #}
-		{%- css %}{% include "public/css/index.css" %}{% endcss %}
+		{#{%- css %}{% include "css/index.css" %}{% endcss %}#}
 		{#- Or you can add from node_modules #}
 		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
 
@@ -36,14 +38,24 @@
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen antialiased w-full md:w-full lg:w-6xl">
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- <p class="visually-hidden">This site was built with <a href="{{ eleventy.generator }}">{{ eleventy.generator }}</a></p> #}
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- <p class="visually-hidden">This site was built with <a href="{{ eleventy.generator }}">{{ eleventy.generator }}</a></p> #}
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- <p class="visually-hidden">This site was built with <a href="{{ eleventy.generator }}">{{ eleventy.generator }}</a></p> #}
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- <p class="visually-hidden">This site was built with <a href="{{ eleventy.generator }}">{{ eleventy.generator }}</a></p> #}
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+		{#- <p class="visually-hidden">This site was built with <a href="{{ eleventy.generator }}">{{ eleventy.generator }}</a></p> #}
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
-		<header>
+		<header class="flex flex-col w-full">
 			<a href="/" class="home-link">{{ metadata.title }}</a>
 
 			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-			<nav>
+			<nav class="">
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 				{%- for entry in collections.all | eleventyNavigation %}
@@ -60,7 +72,10 @@
 		</main>
 
 		<footer>
-			<p><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
+			<p><em>
+				Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a>
+				This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.
+			</em></p>
 		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->

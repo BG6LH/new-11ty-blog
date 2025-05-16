@@ -3,8 +3,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
-
-import pluginFilters from "./_config/filters.js";
+import pluginFilters from "./src/_config/filters.js";
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function(eleventyConfig) {
@@ -21,13 +20,26 @@ export default async function(eleventyConfig) {
 		.addPassthroughCopy({
 			"./public/": "/"
 		})
-		.addPassthroughCopy("./content/feed/pretty-atom-feed.xsl");
+		.addPassthroughCopy("./src/content/feed/pretty-atom-feed.xsl")
+		
+		// Copy the `favicon` icon to the output folder
+		.addPassthroughCopy({
+			'./src/content/images/': '/images/',
+		});
+	
+
+	// Copy the images to the output folder
+    eleventyConfig.addPassthroughCopy({
+        './src/content/images/': '/images/',
+    });
 
 	// Run Eleventy when these files change:
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
+	// Watch CSS file.
+	eleventyConfig.addWatchTarget("css/**/*.css");
 	// Watch images for the image pipeline.
-	eleventyConfig.addWatchTarget("content/**/*.{svg,webp,png,jpg,jpeg,gif}");
+	eleventyConfig.addWatchTarget("src/content/**/*.{svg,webp,png,jpg,jpeg,gif}");
 
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Adds the {% css %} paired shortcode
@@ -134,7 +146,7 @@ export const config = {
 
 	// These are all optional:
 	dir: {
-		input: "content",          // default: "."
+		input: "./src/content",          // default: "."
 		includes: "../_includes",  // default: "_includes" (`input` relative)
 		data: "../_data",          // default: "_data" (`input` relative)
 		output: "_site"

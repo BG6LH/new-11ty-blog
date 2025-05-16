@@ -1,0 +1,35 @@
+{%- css %}.postlist { counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }} }{% endcss %}
+<div reversed class="postlist">
+<masonry-layout>
+{%- for post in postslist | reverse %}
+<div class="item postlist-item">
+    <div class="mx-auto max-w-md overflow-hidden rounded-md bg-white shadow-md md:max-w-2xl mb-6">
+        <div class="md:flex-col">
+            <div class="md:shrink-0">
+                {% if post.data.image %}
+                    <a href="{{ post.url }}">
+                        <img src="{{ post.data.image | url }}" class="w-full" eleventy:widths="w-full" eleventy:formats="webp" alt="{{ post.data.title }} image">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="p-8 pt-2">
+                <h2 class="mb-2 font-bold uppercase text-slate-800">
+                    <a href="{{ post.url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+                </h2>
+                <time class="text-xs font-semibold tracking-wide text-slate-500 uppercase" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+        
+                    {% if post.content.includes('<!--more-->') %}
+                        {{ post.content.split('<!--more-->')[0] | safe }}
+                    {% else %}
+                        {{ post.content | safe }}
+                    {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{%- endfor %}
+</masonry-layout>
+</div>
+
+

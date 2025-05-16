@@ -13,7 +13,9 @@ const eleventyExcludeFromCollections = true;
 const eleventyComputed = {
 	title: "Tagged '{{ tag }}'",
 	permalink: function(data) {
-		return `/tags/${this.slugify(data.tag)}/`;
+
+	//	return `/tags/${this.slugify(data.tag)}/`;
+		return `/tags/${data.tag}/`; // 老模式的URL跟一些页面的URL冲突了，暂时没找到解决办法，这是临时的。
 	}
 };
 ---
