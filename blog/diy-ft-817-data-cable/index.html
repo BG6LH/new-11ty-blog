@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>DIY FT-817 数据电缆</title>
+		<meta name="description" content="为了在FT-817上更方便地玩FT8，我做了一根DATA电脑连接线。配合以前买的一根写频线控制FT-817的PTT，整个系统工作的很顺溜。连接线的制作方法很简单，主要材料是一根标准MD6的线，两个立体声插头，一个USB声卡，直接连到一起就搞定。">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="BG6LH&#39;s Blog">
+		<link rel="stylesheet" href="/eleventy-base-blog/style.out.css">
+		<script src="https://unpkg.com/@appnest/masonry-layout/umd/masonry-layout.min.js"></script>
+		
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */</style>
+	</head>
+	<body class="flex flex-col min-h-screen antialiased w-full md:w-full lg:w-6xl">
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header class="flex flex-col w-full">
+			<a href="/eleventy-base-blog/" class="home-link">BG6LH&#39;s Blog</a>
+			<nav class="">
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/eleventy-base-blog/index-bak/">Homepage</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/">Homepage</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/blog/">Blog</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+
+<article class="bg-white">
+    
+    <div class="px-4 pt-12 pb-16 sm:pt-16 sm:pb-24">
+        <header class="max-w-2xl mx-auto mb-8 text-center">
+            <h1 class="mb-2 text-3xl font-bold uppercase sm:text-4xl text-slate-800" id="diy-ft-817">DIY FT-817 数据电缆</h1>
+            <time class="text-sm text-slate-400" datetime="2018-07-10">10 July 2018</time>
+        </header>
+        <div class="max-w-2xl mx-auto prose prose-slate">
+            <p>为了在FT-817上更方便地玩FT8，我做了一根DATA电脑连接线。配合以前买的一根写频线控制FT-817的PTT，整个系统工作的很顺溜。连接线的制作方法很简单，主要材料是一根标准MD6的线，两个立体声插头，一个USB声卡，直接连到一起就搞定。</p>
+<!--more-->
+<h2 id="ft-817-data">FT-817的DATA接口</h2>
+<p>这个DATA接口，它的名字叫“数据”，其实是通过<strong>音频电平</strong>(音量)来跟其它设备进行信号传递的。这是一个彻头彻脑的“音频”设备。</p>
+<p>FT8用AFSK模式调制信号。AFSK是<strong>音频</strong>的频移键控。电台收发的是一种音频调制信号。这个声音通过电缆传送到电脑声卡里，再用的wsjt-x这类软件解调、播放声音，这个体系就是这样工作起来的。</p>
+<p>我要做的这根线，就是电台到电脑的这段连接电缆。</p>
+<h2 id="">材料清单</h2>
+<ol>
+<li><strong>一根Mini-Din 6（MD6）的标准连接线</strong> 这跟键盘鼠标用的PS/2线接口完全一样。但是PS/2键盘鼠标线大多数省略了2、6两根连线，对于DATA输入输出来说缺了接地线。所以一定要买一根标准的MD6连接线。</li>
+<li><strong>一个USB声卡(带3.5mm的音频输入输出）</strong> 这是为了把FT8的音频信号，跟系统其它软件的音效彻底隔离开。况且我这个2015年的MBP也没有音频输入接口了，只能靠电脑的内置麦克风“听”旁边电台的声音。</li>
+<li><strong>两个3.5mm立体声插头</strong></li>
+<li><strong>一根FT-817的ACC控制线</strong> 如果你想让电脑来自主控制电台的信号收发，就需要这根线。这是一根USB转TTL的编程线、写频线，最早买来是为了给817写频用的，PL-2302芯片的。</li>
+<li>最后在准备一些磁环，套在做好的线两端，用来抑制杂散信号的干扰。</li>
+</ol>
+<h2 id="data">DATA连线方式</h2>
+<p>在FT-817手册的第38/41页，有两张图，说明了DATA接口的连线方案。FT8使用的是AFSK调制模式，只用到了DATA接口的1200bps的针脚接口。所以参考38页那个也行。下边这个是41页那张图，说明了DATA接口所有的定义和连接方式。</p>
+<p><img src="src/content/img/diy-ft-817-data-cable.png" alt="FT-817 DATA接口定义"></p>
+<p><strong>MD6接口的定义：</strong></p>
+<table>
+<thead>
+<tr>
+<th><img src="src/content/img/diy-ft-817-data-cable-1.png" alt="插座正面"></th>
+<th>插座正面图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="src/content/img/diy-ft-817-data-cable-2.png" alt="插座镜像"></td>
+<td>连线的时候要注意，对应的是插座正面的镜像标准画法反面图的针脚应该是黑色的圆点，表示是针</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>下边这张对照表，对应了DATA针脚定义、YAESU的CT-39A连接线的线束颜色、我买的MD6的线束颜色、3.5mm立体声接头的接线对照表。我没买CT-39A，我买的那个MD6线的颜色也不是标准的。所以要用万用表一个个测量，对应出每个针脚的位置。</p>
+<table>
+<thead>
+<tr>
+<th>针脚</th>
+<th>标签</th>
+<th>CT-39A</th>
+<th>我的MD6线的颜色</th>
+<th>声卡接线方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>PKD</td>
+<td>褐色</td>
+<td>蓝色</td>
+<td>Line Out / Green</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GND</td>
+<td>红色</td>
+<td>紫色</td>
+<td>Line I/O GND</td>
+</tr>
+<tr>
+<td>3</td>
+<td>PTT</td>
+<td>橙色</td>
+<td>黄色</td>
+<td>空</td>
+</tr>
+<tr>
+<td>4</td>
+<td>RX9600</td>
+<td>黄色</td>
+<td>白色</td>
+<td>空</td>
+</tr>
+<tr>
+<td>5</td>
+<td>RX1200</td>
+<td>绿色</td>
+<td>黑色</td>
+<td>Line In / Red</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PKS(SQL)</td>
+<td>蓝色</td>
+<td>褐色</td>
+<td>空</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-2">关于声卡的参数</h2>
+<p>网上有一些成品化的连接器方案。比如使用了音频隔离变压器、光偶合的ACC控制电路。我这个主要还是因为只在QRP设备上用，没考虑太多。但是咨询了卖家这个USB声卡的参数，得到了一些参考数据。</p>
+<p>这是绿联的US205 USB声卡，用的是HS-100B芯片的USB声卡方案，据卖家讲：</p>
+<ul>
+<li>Line-OUT：负载16Ω，功率可达60mW。所以我推算峰值输出电压不高于980mV</li>
+<li>MIC-IN：输入57mV，输出功率是0dBFS，失真小于0.02，当超过57mV时，失真就会开始急剧加大；最大输入可达到125mV，输入功率为2dBFS，失真24%</li>
+<li>MIC-IN：输入57mV，输出功率是0dBFS，失真小于0.02，当超过57mV时，失真就会开始急剧加大；最大输入可达到125mV，输入功率为2dBFS，失真24%</li>
+</ul>
+<p>在FT-817的DATA接口的电压指标是这样的：</p>
+<ul>
+<li>封包数据输入（对应声卡的Line-OUT）：阻抗10 kΩ；最大输入电压40 mVpp 用于 1200 bps；2.0 Vpp 用于 9600 bps</li>
+<li>1200 bps 封包数据输出（对应声卡的MIC-IN）：阻抗10 kΩ，最大输出电压300 mVpp</li>
+</ul>
+<p>所以，在音频方面，个人感觉：</p>
+<ul>
+<li>发射时，把USB声卡的音量降低，可以降低输出电压，观察系统的Audio MIDI Setup，降到-29dB左右，可以匹配到817的信号输入电压。具体表现还是要观察ALC电平指示，4-5格就不错了。</li>
+<li>接收时，因为817的DATA接口提供的输出功率是固定的，所以显然大于USB声卡最佳电压两三倍了，按客服说的“信号失真24%”了。不过这对于FT8来说还能接受吧。在接收本地电台的FT8时、还有信噪比很高的信号时，瀑布上总是有附近频率产生的干扰信号，可能就是这个失真带来的问题吧。</li>
+</ul>
+<p>我在各种线上都加了磁环，这套线目前性能稳定。我也担心传说中的烧817的话题，买个连接盒子还是更好些。</p>
+<ul>
+<li>接收时，因为817的DATA接口提供的输出功率是固定的，所以显然大于USB声卡最佳电压两三倍了，按客服说的“信号失真24%”了。不过这对于FT8来说还能接受吧。在接收本地电台的FT8时、还有信噪比很高的信号时，瀑布上总是有附近频率产生的干扰信号，可能就是这个失真带来的问题吧。。</li>
+</ul>
+<p>我在各种线上都加了磁环，这套线目前性能稳定。我也担心传说中的烧817的话题，买个连接盒子还是更好些。</p>
+<p>BTW：<strong>观察系统的Audio MIDI Setup，降到-29dB左右</strong>，这段我也不确定效果如何，因为最终我发现USB声卡音量从大到小，FT-817的ALC电平几乎没变化。而且我FT-817上DIG MIC、SSB MIC、PSK MIC 的设置，都是默认的50，发射起来ALC很稳定，四、五格。这可能跟我加了磁环有关系？</p>
+
+        </div>
+    </div>
+</article>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/blog/maidenhead-locator-system/">Maidenhead 网格定位系统</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/blog/how-to-flash-nanovna-firmware-on-macos-using-dfu-util/">在mac上用dfu-util更新NanoVNA的固件</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>
+				Built with <a href="https://www.11ty.dev/">Eleventy v3.1.0</a>
+				This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.
+			</em></p>
+		</footer>
+
+		<!-- This page `/blog/diy-ft-817-data-cable/` was built on 2025-05-16T17:16:47.649Z -->
+		<script type="module" src="/eleventy-base-blog/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

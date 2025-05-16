@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        :root {
+            --base-size: min(24px, 4vw);
+        }
+        body {
+            background-color: black;
+            color: white;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-size: var(--base-size);
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #settings {
+            text-align: center;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: min(25px, 4vh);
+            padding: 2vh;
+            width: 90%;
+            z-index: 1000;
+        }
+        .problem {
+            position: absolute;
+            font-size: min(200px, 15vw);
+            font-weight: bold;
+            white-space: nowrap;
+            pointer-events: none;
+            max-width: 90%;
+            text-overflow: ellipsis;
+            visibility: hidden; /* 先隐藏后计算 */
+        }
+        #answerContainer {
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 95%;
+            padding: 2vh;
+            -webkit-overflow-scrolling: touch;
+        }
+        #answerTable {
+            border-collapse: collapse;
+            text-align: center;
+            margin: 0 auto;
+            width: auto;
+        }
+        #answerTable td {
+            padding: 8px 15px;
+            white-space: nowrap;
+            font-size: var(--base-size);
+            border-bottom: 1px solid #666;
+        }
+        .num-col { text-align: right; }
+        .operator-col { padding: 0 5px; }
+        .answer-col { text-align: left; }
+        input {
+            width: min(120px, 60vw);
+            padding: min(12px, 2vh);
+            font-size: var(--base-size);
+            color: white;
+            background: #333;
+            border: 2px solid #666;
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+        button {
+            padding: min(15px, 3vh) min(30px, 6vw);
+            font-size: var(--base-size);
+            background: #444;
+            color: white;
+            border: 2px solid #666;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        @media screen and (orientation: landscape) {
+            #answerContainer {
+                max-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="settings">
+        <div>
+            <label>题目数量</label><br>
+            <input type="number" id="problemCount" value="10" min="1" max="100" 
+                   pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <div>
+            <label>每题停留时间(秒)</label><br>
+            <input type="number" id="delayTime" value="2" min="1" max="10" step="1"
+                   pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <button id="startButton">开始练习</button>
+    </div>
+
+<script>
+    let problems = [];
+    let currentIndex = 0;
+    
+    // 初始化移动端支持
+    function initMobileSupport() {
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                this.focus({ preventScroll: true });
+            });
+            input.addEventListener('touchend', function(e) {
+                e.preventDefault();
+            });
+        });
+    }
+
+    function getProblemCount() {
+        const val = parseInt(document.getElementById('problemCount').value);
+        return Math.max(1, Math.min(100, val || 10));
+    }
+
+    function getDelayTime() {
+        const val = parseInt(document.getElementById('delayTime').value);
+        return Math.max(1, Math.min(10, val || 2)) * 1000;
+    }
+
+    function generateProblems() {
+        const count = getProblemCount();
+        const used = new Set();
+        problems = [];
+        
+        while(problems.length < count) {
+            const isAdd = Math.random() > 0.5;
+            let a, b;
+            
+            do {
+                a = Math.floor(Math.random() * 20) + 1;
+                b = Math.floor(Math.random() * (isAdd ? 20 - a : a)) + 1;
+                const problem = `${a}${isAdd ? '+' : '-'}${b}=`;
+                if (!used.has(problem)) {
+                    used.add(problem);
+                    problems.push({
+                        num1: a,
+                        operator: isAdd ? '+' : '-',
+                        num2: b,
+                        answer: isAdd ? a + b : a - b
+                    });
+                    break;
+                }
+            } while(true);
+        }
+    }
+
+    function showProblem() {
+        const total = getProblemCount();
+        if(currentIndex >= total) {
+            document.body.innerHTML = '';
+            const prompt = document.createElement('div');
+            prompt.textContent = '点击屏幕显示答案';
+            prompt.id = 'startPrompt';
+            prompt.style.fontSize = 'min(24px, 6vw)';
+            document.body.appendChild(prompt);
+            return;
+        }
+
+        const elem = document.createElement('div');
+        elem.className = 'problem';
+        elem.textContent = `${problems[currentIndex].num1}${problems[currentIndex].operator}${problems[currentIndex].num2}=`;
+        document.body.appendChild(elem);
+
+        // 等待渲染完成
+        requestAnimationFrame(() => {
+            const elemRect = elem.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            // 动态安全边距（至少50px）
+            const SAFE_MARGIN = Math.max(50, vw * 0.1);
+            
+            // 计算最大可用空间
+            const maxX = vw - elemRect.width - SAFE_MARGIN * 2;
+            const maxY = vh - elemRect.height - SAFE_MARGIN * 2;
+
+            // 生成随机位置
+            let finalX = SAFE_MARGIN;
+            let finalY = SAFE_MARGIN;
+            
+            if (maxX > 0) finalX += Math.random() * maxX;
+            if (maxY > 0) finalY += Math.random() * maxY;
+
+            // 最终位置约束
+            finalX = Math.max(SAFE_MARGIN, Math.min(finalX, vw - elemRect.width - SAFE_MARGIN));
+            finalY = Math.max(SAFE_MARGIN, Math.min(finalY, vh - elemRect.height - SAFE_MARGIN));
+
+            // 应用最终位置
+            elem.style.left = `${finalX}px`;
+            elem.style.top = `${finalY}px`;
+            elem.style.visibility = 'visible';
+
+            setTimeout(() => {
+                elem.remove();
+                currentIndex++;
+                showProblem();
+            }, getDelayTime());
+        });
+    }
+
+    function showAnswers() {
+        document.body.innerHTML = '';
+        const container = document.createElement('div');
+        container.id = 'answerContainer';
+        
+        const table = document.createElement('table');
+        table.id = 'answerTable';
+        
+        problems.forEach((p, i) => {
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td class="num-col">${i + 1}.</td>
+                <td class="num-col">${p.num1}</td>
+                <td class="operator-col">${p.operator}</td>
+                <td class="num-col">${p.num2}</td>
+                <td>=</td>
+                <td class="answer-col">${p.answer}</td>
+            `;
+            table.appendChild(row);
+        });
+
+        container.appendChild(table);
+        document.body.appendChild(container);
+    }
+
+    // 初始化移动端支持
+    initMobileSupport();
+
+    // 事件监听
+    document.getElementById('startButton').addEventListener('click', function() {
+        document.getElementById('settings').style.display = 'none';
+        generateProblems();
+        currentIndex = 0;
+        showProblem();
+    });
+
+    function handleAnswerRequest(e) {
+        if(document.getElementById('startPrompt')) {
+            e.preventDefault();
+            showAnswers();
+        }
+    }
+
+    document.addEventListener('click', handleAnswerRequest);
+    document.addEventListener('touchstart', handleAnswerRequest, { passive: false });
+</script>
+</body>
+</html>

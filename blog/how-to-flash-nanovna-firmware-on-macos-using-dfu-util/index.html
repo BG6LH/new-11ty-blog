@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>在mac上用dfu-util更新NanoVNA的固件</title>
+		<meta name="description" content="我尝试用dfu-util在mac上刷NanoVNA固件，刷机成功。以下是我分享的心得。">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="BG6LH&#39;s Blog">
+		<link rel="stylesheet" href="/eleventy-base-blog/style.out.css">
+		<script src="https://unpkg.com/@appnest/masonry-layout/umd/masonry-layout.min.js"></script>
+		
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */</style>
+	</head>
+	<body class="flex flex-col min-h-screen antialiased w-full md:w-full lg:w-6xl">
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header class="flex flex-col w-full">
+			<a href="/eleventy-base-blog/" class="home-link">BG6LH&#39;s Blog</a>
+			<nav class="">
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/eleventy-base-blog/index-bak/">Homepage</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/">Homepage</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/blog/">Blog</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+
+<article class="bg-white">
+    
+        <figure>
+            <img src="/eleventy-base-blog/blog/how-to-flash-nanovna-firmware-on-macos-using-dfu-util/hiZcXKmrKM-960.webp" class="w-full" alt="在mac上用dfu-util更新NanoVNA的固件 image" loading="lazy" decoding="async" width="960" height="545">
+        </figure>
+    
+    <div class="px-4 pt-12 pb-16 sm:pt-16 sm:pb-24">
+        <header class="max-w-2xl mx-auto mb-8 text-center">
+            <h1 class="mb-2 text-3xl font-bold uppercase sm:text-4xl text-slate-800" id="mac-dfu-util-nanovna">在mac上用dfu-util更新NanoVNA的固件</h1>
+            <time class="text-sm text-slate-400" datetime="2019-08-06">06 August 2019</time>
+        </header>
+        <div class="max-w-2xl mx-auto prose prose-slate">
+            <p>我只有Mac的机器，装了个虚拟机刷NanoVNA的固件总是失败。 于是转投了Mac和linux上常用的刷固件软件： dfu-util。</p>
+<!--more-->
+<p>这个软件兼容的芯片很多，nanoVNA用的STM32也是支持的。</p>
+<p>软件网站在这： <a href="http://dfu-util.sourceforge.net/">http://dfu-util.sourceforge.net/</a></p>
+<p>使用手册在这： <a href="http://dfu-util.sourceforge.net/dfu-util.1.html">http://dfu-util.sourceforge.net/dfu-util.1.html</a></p>
+<h2 id="dfu-util">安装 dfu-util</h2>
+<p>在Mac上安装dfu-util很简单，只要在“终端”(Terminal)程序下运行：</p>
+<pre class="language-zsh" tabindex="0"><code class="language-zsh">brew install dfu-util</code></pre>
+<p>然后系统会自动安装。</p>
+<p>也可能会要求先更新homebrew，没问题，等他自己更新就行了。</p>
+<h2 id="nanovna">短路开机 NanoVNA</h2>
+<p>连接好USB线到电脑，短路中间绿色板子上的BOOT0和VDD两个点，然后开机，机器进入booterloader模式，白屏。此时Mac应该改自己就识别出来了STM32的bootloader，不用安装任何驱动。</p>
+<p>注：短路只在开机时短一下即可，不用一直短路。</p>
+<h2 id="nanovna-2">确认哪个是 nanoVNA</h2>
+<p>Mac的蓝牙控制器也是一个dfu设备，所以，一定要先确认一下，哪个是nanoVNA的bootloader，不能搞错。。</p>
+<p>执行：</p>
+<pre class="language-zsh" tabindex="0"><code class="language-zsh">dfu-util -l</code></pre>
+<p>然后会列出一堆设备信息：</p>
+<pre class="language-zsh" tabindex="0"><code class="language-zsh">dfu-util 0.9
+
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2016 Tormod Volden and Stefan Schmidt
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+Please report bugs to http://sourceforge.net/p/dfu-util/tickets/
+
+Found Runtime: [05ac:8290] ver=0167, devnum=2, cfg=1, intf=5, path="20-8", alt=0, name="UNKNOWN", serial="UNKNOWN"
+Found DFU: [0483:df11] ver=2200, devnum=16, cfg=1, intf=0, path="20-1", alt=1, name="@Option Bytes  /0x1FFFF800/01*016 e", serial="FFFFFFFEFFFF"
+Found DFU: [0483:df11] ver=2200, devnum=16, cfg=1, intf=0, path="20-1", alt=0, name="@Internal Flash  /0x08000000/064*0002Kg", serial="FFFFFFFEFFFF"</code></pre>
+<p><code>[05ac:8290]</code> 这个设备就是Mac的蓝牙控制器。</p>
+<p><code>[0483:df11]</code>才是我们要写入的那个 STM的bootloader。记住这个ID，<code>0483:df11</code>。</p>
+<h2 id="nanovna-3">向 nanoVNA 写入固件文件</h2>
+<p>使用刚才查到的ID，执行命令：</p>
+<pre class="language-zsh" tabindex="0"><code class="language-zsh">dfu-util -v -d 0483:df11 -a 0 -D <下载文件所在的目录>/nanoVNA_900_aa_20190802.dfu</code></pre>
+<p>然后就等吧，屏幕上会出现哗哗哗的刷机信息，直到最后显示：</p>
+<pre class="language-zsh" tabindex="0"><code class="language-zsh">done parsing DfuSe file</code></pre>
+<p>然后拔掉电源重新开机，重新校准NanoVNA，就好了。</p>
+<h2 id="">后记</h2>
+<ul>
+<li>我的刷机环境：macOS Mojave 10.14.5 ，其它机器没试验过，应该问题不大。</li>
+<li>NanoVNA不怕刷成砖，刷坏了再刷就行。</li>
+<li>Linux和树莓派也可以装dfu-util。</li>
+</ul>
+<hr>
+<p>原文发表在我的微信公众号上： <a href="https://mp.weixin.qq.com/s/h29UM2iwV9cKt8FxdvI-6w">https://mp.weixin.qq.com/s/h29UM2iwV9cKt8FxdvI-6w</a></p>
+
+        </div>
+    </div>
+</article>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/blog/diy-ft-817-data-cable/">DIY FT-817 数据电缆</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/blog/maidenhead-locator-system-2/">梅登黑德定位系统</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>
+				Built with <a href="https://www.11ty.dev/">Eleventy v3.1.0</a>
+				This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.
+			</em></p>
+		</footer>
+
+		<!-- This page `/blog/how-to-flash-nanovna-firmware-on-macos-using-dfu-util/` was built on 2025-05-16T17:16:47.649Z -->
+		<script type="module" src="/eleventy-base-blog/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>
